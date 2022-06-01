@@ -1,0 +1,23 @@
+[33mcommit da917a046b4e44b7dc3edbaf1031eec4c35f9dc6[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Calin Cretiu <calin.cretiu@gmail.com>
+Date: Wed Jun 1 11:36:23 2022 +0300
+
+    0.1
+
+[33mcommit fb112b0d0bec49ffd5c8b11e893b14a8d36923f8[m
+Author: Calin Cretiu <calin.cretiu@gmail.com>
+Date: Wed Jun 1 11:35:14 2022 +0300
+
+    0.1
+
+[33mcommit 72850b897736a0030850d39f34df92a2dc1d3e29[m
+Author: Calin Cretiu <calin.cretiu@gmail.com>
+Date: Wed Jun 1 11:17:44 2022 +0300
+
+    0.1
+
+[33mcommit 716f2c58656cc8e383e25b0a19f603cfea1ab70d[m
+Author: Calin Cretiu <calin.cretiu@gmail.com>
+Date: Tue May 31 17:31:07 2022 +0300
+
+    Initialize project using Create React App
