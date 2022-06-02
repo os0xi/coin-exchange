@@ -1,32 +1,28 @@
 import React, { Component } from "react";
-import "./Coins.css";
+import styled from "styled-components";
 import PropTypes from "prop-types";
+const TD = styled.td`
+  border: 1px solid white;
+  width: 25vh;
+`;
 
 export default class Coins extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      price: this.props.price,
-    };
-    this.handleClick = this.handleClick.bind(this);
   }
-  handleClick(event) {
-    event.preventDefault();
-    console.log("refresh pressed");
-    const randomPercentage = 0.994 + Math.random() * 0.01;
-    this.setState((oldState) => ({ price: oldState.price * randomPercentage }));
-  }
+
+  handleClick(event) {}
   render() {
     return (
-      <tr className="coin-row">
-        <td>{this.props.name}</td>
-        <td>{this.props.ticker}</td>
-        <td>${this.state.price}</td>
-        <td>
+      <tr>
+        <TD>{this.props.name}</TD>
+        <TD>{this.props.ticker}</TD>
+        <TD>${this.state.price}</TD>
+        <TD>
           <form action="#" method="GET">
             <button onClick={this.handleClick}>Refresh</button>
           </form>
-        </td>
+        </TD>
       </tr>
     );
   }
