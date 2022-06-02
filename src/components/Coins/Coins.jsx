@@ -7,22 +7,23 @@ const TD = styled.td`
 `;
 
 export default class Coins extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  handleClick(event) {}
+  handleClick = (event) => {
+    event.preventDefault();
+    console.log("refresh pressed");
+    this.props.handleCoinRefresh(this.props.ticker);
+  };
   render() {
     return (
       <tr>
         <TD>{this.props.name}</TD>
         <TD>{this.props.ticker}</TD>
-        <TD>${this.state.price}</TD>
+        <TD>${this.props.price}</TD>
         <TD>
           <form action="#" method="GET">
             <button onClick={this.handleClick}>Refresh</button>
           </form>
         </TD>
+        <TD>${this.props.balance}</TD>
       </tr>
     );
   }

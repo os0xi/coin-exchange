@@ -13,9 +13,19 @@ export default class CoinsList extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.coins.map(({ name, ticker, price }) => (
-            <Coin key={ticker} name={name} ticker={ticker} price={price} />
-          ))}
+          {this.props.coins.map(({ name, ticker, price, balance }) => {
+            const balanceToggled = this.props.showBalance ? balance : "*****";
+            return (
+              <Coin
+                key={ticker}
+                name={name}
+                ticker={ticker}
+                price={price}
+                balance={balanceToggled}
+                handleCoinRefresh={this.props.handleCoinRefresh}
+              />
+            );
+          })}
         </tbody>
       </table>
     );

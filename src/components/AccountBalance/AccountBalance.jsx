@@ -8,9 +8,25 @@ const Section = styled.section`
   text-align: left;
   padding: 1.5rem 0 1.5rem 5rem;
 `;
+
 export default class AccountBalance extends Component {
+  constructor(props) {
+    super(props);
+    this.toggleBalance = this.toggleBalance.bind(this);
+  }
+  toggleBalance() {
+    this.props.toggleBalance();
+  }
+
   render() {
-    return <Section>Balance: ${this.props.amount}</Section>;
+    const buttonText = this.props.showBalance ? "Hide balance" : "Show balance";
+    const balance = this.props.showBalance ? this.props.amount : "*****";
+    return (
+      <Section>
+        Balance: ${balance}
+        <button onClick={this.toggleBalance}>{buttonText}</button>
+      </Section>
+    );
   }
 }
 
