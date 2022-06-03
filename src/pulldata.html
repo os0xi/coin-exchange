@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<style>
+  html {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  table {
+    width: 90vw;
+    background-color: white;
+    border: 1px solid rebeccapurple;
+  }
+
+  tr {
+    width: 100%;
+  }
+  th {
+  }
+  td,
+  th {
+    text-align: left;
+    padding: 0.5rem;
+  }
+</style>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CoinPaprikaTop10</title>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Symbol</th>
+      </thead>
+      <tbody id="data"></tbody>
+    </table>
+    <script defer>
+      fetch("https://api.coinpaprika.com/v1/coins")
+        .then((result) => result.json())
+        .then((result) => {
+          result.slice(0, 10).map((coin) => {
+            document.getElementById(
+              "data"
+            ).innerHTML += `<tr><td>${coin.rank}</td><td>${coin.name}</td><td>${coin.symbol}</td></tr>`;
+            console.log(
+              `<tr><td>${coin.rank}</td><td>${coin.name}</td><td>${coin.symbol}</td></tr>`
+            );
+          });
+        });
+    </script>
+  </body>
+</html>

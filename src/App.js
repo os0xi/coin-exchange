@@ -42,14 +42,19 @@ class App extends React.Component {
       // },
     ],
   };
-  componentDidMount() {
+  async componentDidMount() {
     console.log("Main App Mounted");
-    axios.get("https://api.coinpaprika.com/v1/coins").then((coinData) => {
-      for (let i = 0; i < 10; i++) {
-        // console.log(coinData.data[i]);
-      }
-    });
+    let coinsJson = await axios.get("https://api.coinpaprika.com/v1/coins");
+    let paprikaCoins = coinsJson.data.slice(0, 10).map((coin) => ({
+      key: coin.id,
+      name: coin.name,
+      ticker: coin.symbol,
+      price: 0,
+      balance: 0,
+    }));
+    this.setState({ coinData: paprikaCoins });
   }
+
   toggleBalance = () => {
     this.setState({ showBalance: !this.state.showBalance });
   };
@@ -60,10 +65,11 @@ class App extends React.Component {
     );
     let newCoinData = this.state.coinData.map(function (values) {
       let newValues = { ...values };
-      if (found.ticker === ticker) {
+      if (found.ticker === values.ticker) {
         const randomPercentage = 0.994 + Math.random() * 0.01;
 
-        newValues.price *= randomPercentage;
+        newValues.price += randomPercentage;
+        console.log(newValues.price);
       }
       return newValues;
     });
