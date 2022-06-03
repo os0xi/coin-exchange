@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { NextUIProvider } from "@nextui-org/react";
 import axios from "axios";
 import "./App.css";
 import AccountBalance from "./components/AccountBalance/AccountBalance";
 import CoinsList from "./components/CoinsList/CoinsList";
 import Header from "./components/Header/Header";
+import AirdropButton from "./AirdropButton/AirdropButton";
+import AccountButtons from "./components/AccountButtons/AccountButtons";
 
 function App() {
   const [balance, setbalance] = useState(10000);
@@ -38,7 +41,15 @@ function App() {
   const toggleBalance = () => {
     setshowBalance(!showBalance);
   };
+  const airdropMoney = () => {
+    console.log("airdrop request");
+    setbalance(balance + 1000);
+    let x = [...coinData];
 
+    x = x.map((coins) => {
+      coins.balance += 1;
+    });
+  };
   const handleCoinRefresh = async (ticker) => {
     const found = coinData.find((element) => element.ticker === ticker);
     const freshCoinDataPrice = await axios.get(
@@ -57,19 +68,22 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Header />
-      <AccountBalance
-        amount={balance}
-        toggleBalance={toggleBalance}
-        showBalance={showBalance}
-      />
-      <CoinsList
-        coins={coinData}
-        handleCoinRefresh={handleCoinRefresh}
-        showBalance={showBalance}
-      />
-    </div>
+    <NextUIProvider>
+      <div className="App">
+        <Header />
+        <AccountBalance
+          amount={balance}
+          toggleBalance={toggleBalance}
+          showBalance={showBalance}
+          airdropMoney={airdropMoney}
+        />
+        <CoinsList
+          coins={coinData}
+          handleCoinRefresh={handleCoinRefresh}
+          showBalance={showBalance}
+        />
+      </div>
+    </NextUIProvider>
   );
 }
 

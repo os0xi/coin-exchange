@@ -8,7 +8,7 @@ export default function CoinsList(props) {
           <th>Name</th>
           <th>Ticker</th>
           <th>Price</th>
-          <th>Refresh</th>
+          <th></th>
           <th>Balance</th>
         </tr>
       </thead>
