@@ -14,10 +14,12 @@ export default function CoinsList(props) {
         </tr>
       </thead>
       <tbody>
-        {props.coins.map(({ name, ticker, price, balance }) => {
+        {props.coins.map(({ key, name, ticker, price, balance }) => {
           const balanceToggled = props.showBalance ? balance : "*****";
+          console.log(key);
           return (
             <Coin
+              id={key}
               key={ticker}
               name={name}
               ticker={ticker}

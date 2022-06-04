@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NextUIProvider } from "@nextui-org/react";
+import { Modal, NextUIProvider, Text } from "@nextui-org/react";
 import axios from "axios";
 import "./App.css";
 import AccountBalance from "./components/AccountBalance/AccountBalance";
@@ -9,6 +9,12 @@ import AirdropButton from "./AirdropButton/AirdropButton";
 import AccountButtons from "./components/AccountButtons/AccountButtons";
 
 function App() {
+  const [errorModalVisible, seterrorVisible] = React.useState(false);
+  const showerrorModalHandler = () => {
+    seterrorVisible(true);
+  };
+  const closeerrorModalHandler = () => seterrorVisible(false);
+
   const [balance, setbalance] = useState(0);
   const [showBalance, setshowBalance] = useState(true);
   const [coinData, setcoinData] = useState([]);
@@ -40,6 +46,7 @@ function App() {
   });
   const toggleBalance = () => {
     setshowBalance(!showBalance);
+    console.log(coinData);
   };
   const airdropMoney = () => {
     console.log("airdrop request");
@@ -66,16 +73,13 @@ function App() {
     });
     setcoinData(newCoinData);
   };
-  const handleCoinTrade = (ticker, direction) => {
-    console.log(ticker, direction);
-    const found = coinData.find((element) => element.ticker === ticker);
-
+  const handleCoinTrade = (ticker, direction, amount) => {
     if (direction === "+") {
       let newCoinData = coinData.map((coin) => {
         let newCoin = coin;
         if (coin.ticker === ticker) {
-          setbalance(balance + coin.price);
-          newCoin.balance = newCoin.balance + newCoin.price;
+          newCoin.balance = parseFloat(newCoin.balance + amount);
+          setbalance(balance + coin.price * amount);
         }
         console.log(newCoin);
 
@@ -83,12 +87,18 @@ function App() {
       });
       setcoinData(newCoinData);
     }
+
     if (direction === "-") {
       let newCoinData = coinData.map((coin) => {
         let newCoin = coin;
         if (coin.ticker === ticker) {
-          setbalance(balance - coin.price);
-          newCoin.balance = newCoin.balance - newCoin.price;
+          if (coin.balance >= amount) {
+            console.log(amount);
+            newCoin.balance = parseFloat(newCoin.balance - amount);
+            setbalance(balance - coin.price * amount);
+          } else {
+            showerrorModalHandler();
+          }
         }
         console.log(newCoin);
 
@@ -101,6 +111,17 @@ function App() {
     <NextUIProvider>
       <div className="App">
         <Header />
+        <Modal
+          aria-labelledby="modal-title"
+          open={errorModalVisible}
+          onClose={closeerrorModalHandler}
+        >
+          <Modal.Header>
+            <Text id="modal-title" size={18}>
+              Not enough coins to sell
+            </Text>
+          </Modal.Header>
+        </Modal>
         <AccountBalance
           amount={balance}
           toggleBalance={toggleBalance}
