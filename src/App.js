@@ -9,7 +9,7 @@ import AirdropButton from "./AirdropButton/AirdropButton";
 import AccountButtons from "./components/AccountButtons/AccountButtons";
 
 function App() {
-  const [balance, setbalance] = useState(10000);
+  const [balance, setbalance] = useState(0);
   const [showBalance, setshowBalance] = useState(true);
   const [coinData, setcoinData] = useState([]);
   const setCoinsData = async () => {
@@ -74,9 +74,11 @@ function App() {
       let newCoinData = coinData.map((coin) => {
         let newCoin = coin;
         if (coin.ticker === ticker) {
+          setbalance(balance + coin.price);
           newCoin.balance = newCoin.balance + newCoin.price;
-          console.log(newCoin.balance);
         }
+        console.log(newCoin);
+
         return newCoin;
       });
       setcoinData(newCoinData);
@@ -85,9 +87,11 @@ function App() {
       let newCoinData = coinData.map((coin) => {
         let newCoin = coin;
         if (coin.ticker === ticker) {
+          setbalance(balance - coin.price);
           newCoin.balance = newCoin.balance - newCoin.price;
-          console.log(newCoin.balance);
         }
+        console.log(newCoin);
+
         return newCoin;
       });
       setcoinData(newCoinData);
