@@ -44,11 +44,11 @@ function App() {
   const airdropMoney = () => {
     console.log("airdrop request");
     setbalance(balance + 1000);
-    let x = [...coinData];
+    // let x = [...coinData];
 
-    x = x.map((coins) => {
-      coins.balance += 1;
-    });
+    // x = x.map((coins) => {
+    //   coins.balance += 1;
+    // });
   };
   const handleCoinRefresh = async (ticker) => {
     const found = coinData.find((element) => element.ticker === ticker);
@@ -66,7 +66,33 @@ function App() {
     });
     setcoinData(newCoinData);
   };
+  const handleCoinTrade = (ticker, direction) => {
+    console.log(ticker, direction);
+    const found = coinData.find((element) => element.ticker === ticker);
 
+    if (direction === "+") {
+      let newCoinData = coinData.map((coin) => {
+        let newCoin = coin;
+        if (coin.ticker === ticker) {
+          newCoin.balance = newCoin.balance + newCoin.price;
+          console.log(newCoin.balance);
+        }
+        return newCoin;
+      });
+      setcoinData(newCoinData);
+    }
+    if (direction === "-") {
+      let newCoinData = coinData.map((coin) => {
+        let newCoin = coin;
+        if (coin.ticker === ticker) {
+          newCoin.balance = newCoin.balance - newCoin.price;
+          console.log(newCoin.balance);
+        }
+        return newCoin;
+      });
+      setcoinData(newCoinData);
+    }
+  };
   return (
     <NextUIProvider>
       <div className="App">
@@ -80,6 +106,7 @@ function App() {
         <CoinsList
           coins={coinData}
           handleCoinRefresh={handleCoinRefresh}
+          handleCoinTrade={handleCoinTrade}
           showBalance={showBalance}
         />
       </div>

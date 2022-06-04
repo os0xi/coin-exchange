@@ -1,18 +1,29 @@
 import React from "react";
-import { Button } from "@nextui-org/react";
+import { Button, Text } from "@nextui-org/react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+
 const TD = styled.td`
   width: 25vh;
   padding: 1rem;
 `;
-
+const Buttons = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 const TR = styled.tr`
   border: 1px solid red;
 `;
+
 export default function Coins(props) {
   const handleClick = (event) => {
     props.handleCoinRefresh(props.ticker);
+  };
+  const handleCoinTrade = (direction) => {
+    props.handleCoinTrade(props.ticker, direction);
+  };
+  const handleCoinBuy = () => {
+    props.handleCoinBuy(props.ticker);
   };
   return (
     <TR>
@@ -20,22 +31,51 @@ export default function Coins(props) {
       <TD>{props.ticker}</TD>
       <TD>${props.price}</TD>
       <TD>
-        <form action="#" method="GET">
+        <Buttons>
           <Button
-            shadow
-            onPress={handleClick}
-            css={{
-              background: "#DC1FFF",
-              "&:hover": {
-                background: "#03E1FF",
-              },
+            size="xs"
+            css={{ background: "#00FFA3" }}
+            onPress={(e) => {
+              handleCoinTrade("+");
             }}
           >
-            Refresh
+            <Text weight="bold" color="red">
+              +
+            </Text>
           </Button>
-        </form>
+          <Button
+            size="xs"
+            css={{ background: "#DC1FFF" }}
+            onPress={(e) => {
+              handleCoinTrade("-");
+            }}
+          >
+            <Text weight="bold" color="$white">
+              -
+            </Text>
+          </Button>
+        </Buttons>
       </TD>
       <TD>${props.balance}</TD>
+      <TD>
+        <Buttons>
+          <form action="#" method="GET">
+            <Button
+              bordered
+              onPress={handleClick}
+              css={{
+                background: "transparent",
+                color: "white",
+                "&:hover": {
+                  background: "#03E1FF",
+                },
+              }}
+            >
+              Refresh
+            </Button>
+          </form>
+        </Buttons>
+      </TD>
     </TR>
   );
 }

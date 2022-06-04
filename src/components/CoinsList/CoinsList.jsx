@@ -8,8 +8,9 @@ export default function CoinsList(props) {
           <th>Name</th>
           <th>Ticker</th>
           <th>Price</th>
-          <th></th>
+          <th>Trade</th>
           <th>Balance</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -23,6 +24,7 @@ export default function CoinsList(props) {
               price={price}
               balance={balanceToggled}
               handleCoinRefresh={props.handleCoinRefresh}
+              handleCoinTrade={props.handleCoinTrade}
             />
           );
         })}
